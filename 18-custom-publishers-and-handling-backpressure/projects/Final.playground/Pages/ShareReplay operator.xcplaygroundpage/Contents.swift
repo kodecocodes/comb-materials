@@ -205,10 +205,10 @@ subject.send(0)
 
 let subscription1 = publisher.sink(
   receiveCompletion: {
-    print("subscription2 completed: \($0)", to: &logger)
+    print("subscription1 completed: \($0)", to: &logger)
   },
   receiveValue: {
-    print("subscription2 received \($0)", to: &logger)
+    print("subscription1 received \($0)", to: &logger)
   }
 )
 

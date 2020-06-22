@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios' display-mode='rendered'>
+    <pages>
+        <page name='Never'/>
+        <page name='try* operators'/>
+        <page name='Mapping errors'/>
+        <page name='Designing your fallible APIs'/>
+        <page name='Catching and retrying'/>
+    </pages>
+</playground>

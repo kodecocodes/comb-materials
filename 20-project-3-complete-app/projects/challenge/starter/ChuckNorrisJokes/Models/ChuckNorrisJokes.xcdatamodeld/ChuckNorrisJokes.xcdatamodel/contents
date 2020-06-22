@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14903" systemVersion="19B77a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="JokeManagedObject" representedClassName="JokeManagedObject" syncable="YES" codeGenerationType="class">
+        <attribute name="categories" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="languageCode" optional="YES" attributeType="String"/>
+        <attribute name="translatedValue" optional="YES" attributeType="String"/>
+        <attribute name="translationLanguageCode" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="JokeManagedObject" positionX="-63" positionY="-18" width="128" height="133"/>
+    </elements>
+</model>

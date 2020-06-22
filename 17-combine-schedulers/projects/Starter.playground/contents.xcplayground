@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='ios'>
+    <pages>
+        <page name='subscribeOn-receiveOn'/>
+        <page name='ImmediateScheduler'/>
+        <page name='RunLoop'/>
+        <page name='DispatchQueue'/>
+        <page name='OperationQueue'/>
+    </pages>
+</playground>

@@ -1,0 +1,75 @@
+/// Copyright (c) 2019 Razeware LLC
+///
+/// Permission is hereby granted, free of charge, to any person obtaining a copy
+/// of this software and associated documentation files (the "Software"), to deal
+/// in the Software without restriction, including without limitation the rights
+/// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+/// copies of the Software, and to permit persons to whom the Software is
+/// furnished to do so, subject to the following conditions:
+///
+/// The above copyright notice and this permission notice shall be included in
+/// all copies or substantial portions of the Software.
+///
+/// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
+/// distribute, sublicense, create a derivative work, and/or sell copies of the
+/// Software in any work that is designed, intended, or marketed for pedagogical or
+/// instructional purposes related to programming, coding, application development,
+/// or information technology.  Permission for such use, copying, modification,
+/// merger, publication, distribution, sublicensing, creation of derivative works,
+/// or sale is expressly withheld.
+///
+/// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+/// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+/// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+/// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+/// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+/// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+/// THE SOFTWARE.
+
+import SwiftUI
+
+struct DisplayView: View {
+  enum DisplayType {
+    case hex, rgb, name
+  }
+  
+  @ObservedObject var viewModel: CalculatorViewModel
+  let type: DisplayType
+  let width: CGFloat
+
+  var body: some View {
+    Text(text)
+      .font(Font.system(size: 96, weight: .regular, design: .monospaced))
+      .lineLimit(1)
+      .minimumScaleFactor(0.1)
+      .foregroundColor(viewModel.contrastingColor)
+      .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+      .frame(width: width, height: width / 3)
+      .animation(.easeInOut)
+  }
+  
+  private var text: String {
+    switch type {
+    case .hex:
+      return viewModel.hexText
+    case .rgb:
+      return viewModel.rgboText
+    case .name:
+      return viewModel.name
+    }
+  }
+  
+  init(viewModel: CalculatorViewModel, type: DisplayType, width: CGFloat = 207) {
+    self.viewModel = viewModel
+    self.type = type
+    self.width = width
+  }
+}
+
+struct RGBView_Previews: PreviewProvider {
+    static var previews: some View {
+      DisplayView(viewModel: CalculatorViewModel(), type: .hex)
+          .background(Color.blue)
+          .previewLayout(.sizeThatFits)
+    }
+}

@@ -66,6 +66,7 @@ struct ReaderView: View {
           // Add timer here
         }.padding()
       }
+      .listStyle(PlainListStyle())
       // Present the Settings sheet here
       // Display errors here
       .navigationBarTitle(Text("\(self.model.stories.count) Stories"))

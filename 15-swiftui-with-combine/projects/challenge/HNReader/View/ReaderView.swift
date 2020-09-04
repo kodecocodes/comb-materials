@@ -76,6 +76,7 @@ struct ReaderView: View {
           }
         }.padding()
       }
+      .listStyle(PlainListStyle())
       .sheet(isPresented: self.$presentingSettingsSheet, content: {
         SettingsView()
           .environmentObject(self.settings)

@@ -101,7 +101,7 @@ public struct ThreadRecorderView: View {
         .animation(.default)
       }
     }
-    .frame(width: 400, height: 600) // ZStack + frame mostly for Xcode 12 beta which needs a fixed size for UIHostingController to behave
+    .frame(width: 375, height: 600) // ZStack + frame mostly for Xcode 12 beta which needs a fixed size for UIHostingController to behave
     .onAppear {
       self.recorder.start(with: self.setup)
     }

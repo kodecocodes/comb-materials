@@ -25,9 +25,10 @@ let setupPublisher = { recorder in
 let view = ThreadRecorderView(title: "Using ImmediateScheduler", setup: setupPublisher)
 PlaygroundPage.current.liveView = UIHostingController(rootView: view)
 
+
 //: [Next](@next)
 /*:
- Copyright (c) 2019 Razeware LLC
+ Copyright (c) 2020 Razeware LLC
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

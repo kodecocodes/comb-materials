@@ -1,4 +1,4 @@
-/// Copyright (c) 2019 Razeware LLC
+/// Copyright (c) 2020 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -91,13 +91,18 @@ public struct ThreadRecorderView: View {
   }
 
   public var body: some View {
-    VStack(alignment: .leading) {
-      Text(title)
-        .fixedSize(horizontal: false, vertical: true)
-      List(recorder.chains.reversed()) { chain in
-        RecorderDataView(data: chain.data)
+    ZStack(alignment: .top) {
+      VStack(alignment: .leading) {
+        Text(title)
+          .fixedSize(horizontal: false, vertical: true)
+        List(recorder.chains.reversed()) { chain in
+          RecorderDataView(data: chain.data)
+        }
+        .animation(.default)
       }
-    }.onAppear {
+    }
+    .frame(width: 400, height: 600) // ZStack + frame mostly for Xcode 12 beta which needs a fixed size for UIHostingController to behave
+    .onAppear {
       self.recorder.start(with: self.setup)
     }
   }
@@ -129,7 +134,7 @@ struct RecorderDataView: View {
 }
 
 /*:
- Copyright (c) 2019 Razeware LLC
+ Copyright (c) 2020 Razeware LLC
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

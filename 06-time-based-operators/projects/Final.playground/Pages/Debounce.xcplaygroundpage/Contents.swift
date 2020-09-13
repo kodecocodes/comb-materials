@@ -19,7 +19,7 @@ let view = VStack(spacing: 100) {
   debouncedTimeline
 }
 
-PlaygroundPage.current.liveView = UIHostingController(rootView: view)
+PlaygroundPage.current.liveView = UIHostingController(rootView: view.frame(width: 375, height: 600))
 
 subject.displayEvents(in: subjectTimeline)
 debounced.displayEvents(in: debouncedTimeline)

@@ -19,7 +19,7 @@ let view = VStack(spacing: 100) {
   throttledTimeline
 }
 
-PlaygroundPage.current.liveView = UIHostingController(rootView: view)
+PlaygroundPage.current.liveView = UIHostingController(rootView: view.frame(width: 375, height: 600))
 
 subject.displayEvents(in: subjectTimeline)
 throttled.displayEvents(in: throttledTimeline)

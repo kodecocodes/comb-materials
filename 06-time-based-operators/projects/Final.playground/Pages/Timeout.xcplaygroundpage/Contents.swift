@@ -21,7 +21,7 @@ let view = VStack(spacing: 100) {
   timeline
 }
 
-PlaygroundPage.current.liveView = UIHostingController(rootView: view)
+PlaygroundPage.current.liveView = UIHostingController(rootView: view.frame(width: 375, height: 600))
 
 timedOutSubject.displayEvents(in: timeline)
 //: [Next](@next)

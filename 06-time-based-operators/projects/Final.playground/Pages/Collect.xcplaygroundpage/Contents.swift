@@ -34,7 +34,7 @@ let view = VStack(spacing: 40) {
   collectedTimeline2
 }
 
-PlaygroundPage.current.liveView = UIHostingController(rootView: view)
+PlaygroundPage.current.liveView = UIHostingController(rootView: view.frame(width: 375, height: 600))
 
 sourcePublisher.displayEvents(in: sourceTimeline)
 collectedPublisher.displayEvents(in: collectedTimeline)

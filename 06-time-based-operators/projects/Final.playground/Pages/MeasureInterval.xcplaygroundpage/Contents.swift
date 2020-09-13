@@ -34,7 +34,7 @@ let subscription3 = measureSubject2.sink {
 
 subject.feed(with: typingHelloWorld)
 /*:
- Copyright (c) 2019 Razeware LLC
+ Copyright (c) 2020 Razeware LLC
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

@@ -159,12 +159,12 @@ example(of: "switchToLatest") {
 //
 //  // 1
 //  func getImage() -> AnyPublisher<UIImage?, Never> {
-//      return URLSession.shared
-//                       .dataTaskPublisher(for: url)
-//                       .map { data, _ in UIImage(data: data) }
-//                       .print("image")
-//                       .replaceError(with: nil)
-//                       .eraseToAnyPublisher()
+//      URLSession.shared
+//                .dataTaskPublisher(for: url)
+//                .map { data, _ in UIImage(data: data) }
+//                .print("image")
+//                .replaceError(with: nil)
+//                .eraseToAnyPublisher()
 //  }
 //
 //  // 2
@@ -268,7 +268,7 @@ example(of: "zip") {
   publisher2.send(completion: .finished)
 }
 
-// Copyright (c) 2019 Razeware LLC
+// Copyright (c) 2020 Razeware LLC
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

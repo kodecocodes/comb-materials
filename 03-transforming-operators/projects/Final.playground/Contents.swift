@@ -67,38 +67,33 @@ example(of: "tryMap") {
 
 example(of: "flatMap") {
   // 1
-  let charlotte = Chatter(name: "Charlotte", message: "Hi, I'm Charlotte!")
-  let james = Chatter(name: "James", message: "Hi, I'm James!")
-
-  // 2
-  let chat = CurrentValueSubject<Chatter, Never>(charlotte)
-
-  // 3
-  chat
-    // 6
-    .flatMap(maxPublishers: .max(2)) { $0.message }
+  func decode(_ codes: [Int]) -> AnyPublisher<String, Never> {
+    codes
+      // 2
+      .map {
+        (32...255).contains($0) ? UnicodeScalar($0) : nil
+      }
+      .map { String($0 ?? " ") }
+      // 3
+      .publisher
+      // 4
+      .collect()
+      .map { $0.joined() }
+      // 5
+      .eraseToAnyPublisher()
+  }
+    
+  // 6
+  [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33]
+    .publisher
+    .collect()
     // 7
+    .flatMap(decode)
+    // 8
+    .collect()
+    .map { $0.joined() }
     .sink(receiveValue: { print($0) })
     .store(in: &subscriptions)
-
-  // 4
-  charlotte.message.value = "Charlotte: How's it going?"
-
-  // 5
-  chat.value = james
-
-  james.message.value = "James: Doing great. You?"
-  charlotte.message.value = "Charlotte: I'm doing fine thanks."
-
-  // 8
-  let morgan = Chatter(name: "Morgan",
-                       message: "Hey guys, what are you up to?")
-  
-  // 9
-  chat.value = morgan
-
-  // 10
-  charlotte.message.value = "Did you hear something?"
 }
 
 // MARK: - Replacing upstream output
@@ -161,6 +156,10 @@ example(of: "scan") {
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

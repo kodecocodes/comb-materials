@@ -60,8 +60,6 @@ final class CalculatorViewModel: ObservableObject {
       ? .black : .white
   }
   
-  private var subscriptions = Set<AnyCancellable>()
-    
   func process(_ input: String) {
     switch input {
     case Constant.clear:
@@ -92,9 +90,8 @@ final class CalculatorViewModel: ObservableObject {
           return "------------"
         }
       }
-      .assign(to: \.name, on: self)
-      .store(in: &subscriptions)
-    
+      .assign(to: &$name)
+
     let colorValuesShared = hexTextShared
       .map { hex -> (Double, Double, Double, Double)? in
         Color.redGreenBlueOpacity(forHex: hex)
@@ -103,9 +100,8 @@ final class CalculatorViewModel: ObservableObject {
     
     colorValuesShared
       .map { $0 != nil ? Color(values: $0!) : .white }
-      .assign(to: \.color, on: self)
-      .store(in: &subscriptions)
-    
+      .assign(to: &$color)
+
     colorValuesShared
       .map { values -> String in
         if let values = values {
@@ -116,7 +112,6 @@ final class CalculatorViewModel: ObservableObject {
           return "---, ---, ---, ---"
         }
       }
-      .assign(to: \.rgboText, on: self)
-      .store(in: &subscriptions)
+      .assign(to: &$rgboText)
   }
 }

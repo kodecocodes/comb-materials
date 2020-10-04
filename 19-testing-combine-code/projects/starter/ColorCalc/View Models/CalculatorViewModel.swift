@@ -18,6 +18,10 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -95,9 +99,8 @@ final class CalculatorViewModel: ObservableObject {
           return "------------"
         }
       }
-      .assign(to: \.name, on: self)
-      .store(in: &subscriptions)
-    
+      .assign(to: &$name)
+
     let colorValuesShared = hexTextShared
       .map { hex -> (Double, Double, Double, Double)? in
         Color.redGreenBlueOpacity(forHex: hex)
@@ -106,9 +109,8 @@ final class CalculatorViewModel: ObservableObject {
     
     colorValuesShared
       .map { $0 != nil ? Color(values: $0!) : .red }
-      .assign(to: \.color, on: self)
-      .store(in: &subscriptions)
-    
+      .assign(to: &$color)
+
     colorValuesShared
       .map { values -> String in
         if let values = values {
@@ -119,7 +121,6 @@ final class CalculatorViewModel: ObservableObject {
           return "---, ---, ---, ---"
         }
       }
-      .assign(to: \.rgboText, on: self)
-      .store(in: &subscriptions)
+      .assign(to: &$rgboText)
   }
 }

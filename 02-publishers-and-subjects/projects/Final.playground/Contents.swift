@@ -92,6 +92,25 @@ example(of: "assign(to:on:)") {
     .assign(to: \.value, on: object)
 }
 
+example(of: "assign(to:)") {
+  // 1
+  class SomeObject {
+    @Published var value = 0
+  }
+  
+  let object = SomeObject()
+  
+  // 2
+  object.$value
+    .sink {
+      print($0)
+    }
+  
+  // 3
+  (0..<10).publisher
+    .assign(to: &object.$value)
+}
+
 example(of: "Custom Subscriber") {
   // 1
   let publisher = (1...6).publisher
@@ -135,16 +154,16 @@ example(of: "Custom Subscriber") {
 //      }
 //    }
 //  }
-//  
+//
 //  // 1
 //  let future = futureIncrement(integer: 1, afterDelay: 3)
-//  
+//
 //  // 2
 //  future
 //    .sink(receiveCompletion: { print($0) },
 //          receiveValue: { print($0) })
 //    .store(in: &subscriptions)
-//  
+//
 //  future
 //    .sink(receiveCompletion: { print("Second", $0) },
 //          receiveValue: { print("Second", $0) })
@@ -315,6 +334,10 @@ example(of: "Type erasure") {
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

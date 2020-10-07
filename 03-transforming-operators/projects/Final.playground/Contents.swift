@@ -68,28 +68,27 @@ example(of: "tryMap") {
 example(of: "flatMap") {
   // 1
   func decode(_ codes: [Int]) -> AnyPublisher<String, Never> {
-    codes
-      // 2
-      .map {
-        (32...255).contains($0) ? UnicodeScalar($0) : nil
-      }
-      .map { String($0 ?? " ") }
-      // 3
-      .publisher
-      // 4
-      .collect()
-      .map { $0.joined() }
-      // 5
-      .eraseToAnyPublisher()
+    // 2
+    Just(
+      codes
+        .compactMap { code in
+          guard (32...255).contains(code) else { return nil }
+          return String(UnicodeScalar(code) ?? " ")
+        }
+        // 3
+        .joined()
+    )
+    // 4
+    .eraseToAnyPublisher()
   }
     
-  // 6
+  // 5
   [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33]
     .publisher
     .collect()
-    // 7
+    // 6
     .flatMap(decode)
-    // 8
+    // 7
     .collect()
     .map { $0.joined() }
     .sink(receiveValue: { print($0) })

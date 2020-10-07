@@ -1,15 +1,15 @@
 /// Copyright (c) 2020 Razeware LLC
-///
+/// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-///
+/// 
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-///
+/// 
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,6 +17,10 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+/// 
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -41,85 +45,35 @@ public final class JokesViewModel: ObservableObject {
   @Published public var joke: Joke = Joke.starter
   @Published public var backgroundColor = Color("Gray")
   @Published public var decisionState: DecisionState = .undecided
-  @Published public var showTranslation = false
-  
+
   private let jokesService: JokeServiceDataPublisher
-  private let translationService: TranslationServiceDataPublisher
-  
-  private var subscriptions = Set<AnyCancellable>()
-  private var jokeSubscriptions = Set<AnyCancellable>()
-  
-  public init(jokesService: JokeServiceDataPublisher = JokesService(),
-              translationService: TranslationServiceDataPublisher = TranslationService()) {
+
+  public init(jokesService: JokeServiceDataPublisher = JokesService()) {
     self.jokesService = jokesService
-    self.translationService = translationService
-    
+
     $joke
       .map { _ in false }
-      .assign(to: \.fetching, on: self)
-      .store(in: &subscriptions)
+      .assign(to: &$fetching)
   }
   
   public func fetchJoke() {
     // 1
     fetching = true
+
     // 2
-    jokeSubscriptions = []
-    
-    // 3
     jokesService.publisher()
-      // 4
+      // 3
       .retry(1)
-      // 5
+      // 4
       .decode(type: Joke.self, decoder: Self.decoder)
-       // 6
+       // 5
       .replaceError(with: Joke.error)
-      // 7
+      // 6
       .receive(on: DispatchQueue.main)
-      // 8
-      .handleEvents(receiveOutput: { [unowned self] in
-        self.joke = $0
-      })
-      // 9
-      .filter { $0 != Joke.error }
-       // 10
-      .flatMap { [unowned self] joke in
-        self.fetchTranslation(for: joke, to: "es")
-      }
-      // 11
-      .receive(on: DispatchQueue.main)
-       // 12
-      .assign(to: \.joke, on: self)
-      .store(in: &jokeSubscriptions)
+       // 7
+      .assign(to: &$joke)
   }
 
-  func fetchTranslation(for joke: Joke, to languageCode: String)
-    -> AnyPublisher<Joke, Never> {
-    // 1
-    guard joke.languageCode != languageCode else {
-      return Just(joke).eraseToAnyPublisher()
-    }
-    
-    // 2
-    return translationService.publisher(for: joke, to: languageCode)
-      .retry(1)
-      .decode(type: TranslationResponse.self, decoder: Self.decoder)
-      // 3
-      .compactMap { $0.translations.first }
-      // 4
-      .map {
-        Joke(id: joke.id,
-             value: joke.value,
-             categories: joke.categories,
-             languageCode: languageCode,
-             translationLanguageCode: languageCode,
-             translatedValue: $0)
-      }
-      // 5
-      .replaceError(with: Joke.error)
-      .eraseToAnyPublisher()
-  }
-  
   public func updateBackgroundColorForTranslation(_ translation: Double) {
     switch translation {
     case ...(-0.5):

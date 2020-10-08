@@ -100,8 +100,8 @@ example(of: "flatMap") {
 example(of: "replaceNil") {
   // 1
   ["A", nil, "C"].publisher
+    .eraseToAnyPublisher()
     .replaceNil(with: "-") // 2
-    .map { $0! }
     .sink(receiveValue: { print($0) }) // 3
     .store(in: &subscriptions)
 }

@@ -83,11 +83,11 @@ struct SettingsView: View {
   
   private func moveKeyword(from source: IndexSet, to destination: Int) {
     guard let source = source.first,
-          destination != settings.keywords.endIndex else { return }
+          destination != source else { return }
 
-    settings.keywords
-      .swapAt(source,
-              source > destination ? destination : destination - 1)
+    let moved = settings.keywords.remove(at: source)
+    settings.keywords.insert(moved,
+                             at: source > destination ? destination : destination - 1)
   }
   
   private func deleteKeyword(at index: IndexSet) {

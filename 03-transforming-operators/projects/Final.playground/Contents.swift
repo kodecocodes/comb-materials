@@ -3,8 +3,6 @@ import Combine
 
 var subscriptions = Set<AnyCancellable>()
 
-// MARK: - Collecting values
-
 example(of: "collect") {
   ["A", "B", "C", "D", "E"].publisher
     .collect(2)
@@ -13,13 +11,11 @@ example(of: "collect") {
     .store(in: &subscriptions)
 }
 
-// MARK: - Mapping values
-
 example(of: "map") {
   // 1
   let formatter = NumberFormatter()
   formatter.numberStyle = .spellOut
-
+  
   // 2
   [123, 4, 56].publisher
     // 3
@@ -33,7 +29,7 @@ example(of: "map") {
 example(of: "map key paths") {
   // 1
   let publisher = PassthroughSubject<Coordinate, Never>()
-        
+  
   // 2
   publisher
     // 3
@@ -63,8 +59,6 @@ example(of: "tryMap") {
     .store(in: &subscriptions)
 }
 
-// MARK: - Flattening publishers
-
 example(of: "flatMap") {
   // 1
   func decode(_ codes: [Int]) -> AnyPublisher<String, Never> {
@@ -81,7 +75,7 @@ example(of: "flatMap") {
     // 4
     .eraseToAnyPublisher()
   }
-    
+  
   // 5
   [72, 101, 108, 108, 111, 44, 32, 87, 111, 114, 108, 100, 33]
     .publisher
@@ -89,13 +83,9 @@ example(of: "flatMap") {
     // 6
     .flatMap(decode)
     // 7
-    .collect()
-    .map { $0.joined() }
     .sink(receiveValue: { print($0) })
     .store(in: &subscriptions)
 }
-
-// MARK: - Replacing upstream output
 
 example(of: "replaceNil") {
   // 1
@@ -109,7 +99,7 @@ example(of: "replaceNil") {
 example(of: "replaceEmpty(with:)") {
   // 1
   let empty = Empty<Int, Never>()
-
+  
   // 2
   empty
     .replaceEmpty(with: 1)
@@ -136,7 +126,7 @@ example(of: "scan") {
     .store(in: &subscriptions)
 }
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

@@ -10,9 +10,10 @@ example(of: "Publisher") {
   // 2
   let publisher = NotificationCenter.default
     .publisher(for: myNotification, object: nil)
-
+  
   // 3
   let center = NotificationCenter.default
+
   // 4
   let observer = center.addObserver(
     forName: myNotification,
@@ -23,17 +24,16 @@ example(of: "Publisher") {
 
   // 5
   center.post(name: myNotification, object: nil)
+
   // 6
   center.removeObserver(observer)
 }
 
 example(of: "Subscriber") {
   let myNotification = Notification.Name("MyNotification")
-
-  let publisher = NotificationCenter.default
-    .publisher(for: myNotification, object: nil)
-
   let center = NotificationCenter.default
+
+  let publisher = center.publisher(for: myNotification, object: nil)
 
   // 1
   let subscription = publisher
@@ -143,32 +143,35 @@ example(of: "Custom Subscriber") {
   publisher.subscribe(subscriber)
 }
 
-//example(of: "Future") {
-//  func futureIncrement(
-//    integer: Int,
-//    afterDelay delay: TimeInterval) -> Future<Int, Never> {
-//    Future<Int, Never> { promise in
-//      print("Original")
-//      DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
-//        promise(.success(integer + 1))
-//      }
-//    }
-//  }
-//
-//  // 1
-//  let future = futureIncrement(integer: 1, afterDelay: 3)
-//
-//  // 2
-//  future
-//    .sink(receiveCompletion: { print($0) },
-//          receiveValue: { print($0) })
-//    .store(in: &subscriptions)
-//
-//  future
-//    .sink(receiveCompletion: { print("Second", $0) },
-//          receiveValue: { print("Second", $0) })
-//    .store(in: &subscriptions)
-//}
+/*
+example(of: "Future") {
+  func futureIncrement(
+    integer: Int,
+    afterDelay delay: TimeInterval) -> Future<Int, Never> {
+
+      Future<Int, Never> { promise in
+        print("Original")
+        DispatchQueue.global().asyncAfter(deadline: .now() + delay) {
+          promise(.success(integer + 1))
+        }
+      }
+  }
+  
+  // 1
+  let future = futureIncrement(integer: 1, afterDelay: 3)
+
+  // 2
+  future
+    .sink(receiveCompletion: { print($0) },
+          receiveValue: { print($0) })
+    .store(in: &subscriptions)
+  
+  future
+    .sink(receiveCompletion: { print("Second", $0) },
+          receiveValue: { print("Second", $0) })
+    .store(in: &subscriptions)
+}
+*/
 
 example(of: "PassthroughSubject") {
   // 1
@@ -247,6 +250,7 @@ example(of: "CurrentValueSubject") {
   subject.send(2)
   
   print(subject.value)
+  
   subject.value = 3
   print(subject.value)
   
@@ -313,9 +317,10 @@ example(of: "Type erasure") {
   
   // 4
   subject.send(0)
+  //publisher.send(1)
 }
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -334,10 +339,6 @@ example(of: "Type erasure") {
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-///
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

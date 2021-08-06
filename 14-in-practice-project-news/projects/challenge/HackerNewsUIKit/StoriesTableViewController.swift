@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -39,6 +39,11 @@ class StoriesTableViewController: UITableViewController {
   private let api = API()
   private var subscriptions = [AnyCancellable]()
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor(white: 1.0, alpha: 0.9)
+  }
+  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
@@ -64,5 +69,9 @@ class StoriesTableViewController: UITableViewController {
     cell.detailTextLabel!.text = "By \(story.by)"
     
     return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
   }
 }

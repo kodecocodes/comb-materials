@@ -34,13 +34,15 @@ struct API {
   }
 
   /// Maximum number of stories to fetch (reduce for lower API strain during development).
-  let maxStories = 10
+  var maxStories = 10
 
   /// A shared JSON decoder to use in calls.
   private let decoder = JSONDecoder()
   
-  private let apiQueue = DispatchQueue(label: "API", qos: .default, attributes: .concurrent)
-
+  private let apiQueue = DispatchQueue(label: "API",
+                                       qos: .default,
+                                       attributes: .concurrent)
+  
   func story(id: Int) -> AnyPublisher<Story, Error> {
     URLSession.shared
       .dataTaskPublisher(for: EndPoint.story(id).url)
@@ -50,34 +52,33 @@ struct API {
       .catch { _ in Empty<Story, Error>() }
       .eraseToAnyPublisher()
   }
-
+  
   func mergedStories(ids storyIDs: [Int]) -> AnyPublisher<Story, Error> {
     let storyIDs = Array(storyIDs.prefix(maxStories))
-
     precondition(!storyIDs.isEmpty)
 
     let initialPublisher = story(id: storyIDs[0])
     let remainder = Array(storyIDs.dropFirst())
-
+    
     return remainder.reduce(initialPublisher) { combined, id in
       return combined
         .merge(with: story(id: id))
         .eraseToAnyPublisher()
     }
   }
-
+  
   func stories() -> AnyPublisher<[Story], Error> {
     URLSession.shared
       .dataTaskPublisher(for: EndPoint.stories.url)
       .map(\.data)
       .decode(type: [Int].self, decoder: decoder)
       .mapError { error -> API.Error in
-          switch error {
-          case is URLError:
-            return Error.addressUnreachable(EndPoint.stories.url)
-          default:
-            return Error.invalidResponse
-          }
+        switch error {
+        case is URLError:
+          return Error.addressUnreachable(EndPoint.stories.url)
+        default:
+          return Error.invalidResponse
+        }
       }
       .filter { !$0.isEmpty }
       .flatMap { storyIDs in
@@ -94,16 +95,6 @@ struct API {
 let api = API()
 var subscriptions = [AnyCancellable]()
 
-//api.story(id: -5)
-//   .sink(receiveCompletion: { print($0) },
-//         receiveValue: { print($0) })
-//   .store(in: &subscriptions)
-
-//api.mergedStories(ids: [1000, 1001, 1002])
-//   .sink(receiveCompletion: { print($0) },
-//         receiveValue: { print($0) })
-//   .store(in: &subscriptions)
-
 api.stories()
    .sink(receiveCompletion: { print($0) },
          receiveValue: { print($0) })
@@ -112,7 +103,7 @@ api.stories()
 // Run indefinitely.
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

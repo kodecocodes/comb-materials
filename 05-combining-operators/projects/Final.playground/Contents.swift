@@ -127,8 +127,10 @@ example(of: "switchToLatest") {
   // 3
   publishers
     .switchToLatest()
-    .sink(receiveCompletion: { _ in print("Completed!") },
-          receiveValue: { print($0) })
+    .sink(
+        receiveCompletion: { _ in print("Completed!") },
+        receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 
   // 4
@@ -159,12 +161,12 @@ example(of: "switchToLatest") {
 //
 //  // 1
 //  func getImage() -> AnyPublisher<UIImage?, Never> {
-//      URLSession.shared
-//                .dataTaskPublisher(for: url)
-//                .map { data, _ in UIImage(data: data) }
-//                .print("image")
-//                .replaceError(with: nil)
-//                .eraseToAnyPublisher()
+//    URLSession.shared
+//        .dataTaskPublisher(for: url)
+//        .map { data, _ in UIImage(data: data) }
+//        .print("image")
+//        .replaceError(with: nil)
+//        .eraseToAnyPublisher()
 //  }
 //
 //  // 2
@@ -182,6 +184,7 @@ example(of: "switchToLatest") {
 //  DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
 //    taps.send()
 //  }
+//
 //  DispatchQueue.main.asyncAfter(deadline: .now() + 3.1) {
 //    taps.send()
 //  }
@@ -195,8 +198,10 @@ example(of: "merge(with:)") {
   // 2
   publisher1
     .merge(with: publisher2)
-    .sink(receiveCompletion: { _ in print("Completed") },
-          receiveValue: { print($0) })
+    .sink(
+        receiveCompletion: { _ in print("Completed") },
+        receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 
   // 3
@@ -222,8 +227,10 @@ example(of: "combineLatest") {
   // 2
   publisher1
     .combineLatest(publisher2)
-    .sink(receiveCompletion: { _ in print("Completed") },
-          receiveValue: { print("P1: \($0), P2: \($1)") })
+    .sink(
+        receiveCompletion: { _ in print("Completed") },
+        receiveValue: { print("P1: \($0), P2: \($1)") }
+    )
     .store(in: &subscriptions)
 
   // 3
@@ -250,8 +257,10 @@ example(of: "zip") {
   // 2
   publisher1
     .zip(publisher2)
-    .sink(receiveCompletion: { _ in print("Completed") },
-          receiveValue: { print("P1: \($0), P2: \($1)") })
+    .sink(
+        receiveCompletion: { _ in print("Completed") },
+        receiveValue: { print("P1: \($0), P2: \($1)") }
+    )
     .store(in: &subscriptions)
 
   // 3
@@ -268,7 +277,7 @@ example(of: "zip") {
   publisher2.send(completion: .finished)
 }
 
-// Copyright (c) 2020 Razeware LLC
+// Copyright (c) 2021 Razeware LLC
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal

@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -100,7 +100,7 @@ struct API {
     URLSession.shared.dataTaskPublisher(for: EndPoint.stories.url)
       .map { $0.0 }
       .decode(type: [Int].self, decoder: decoder)
-      .mapError { error in
+      .mapError { error -> Error in
         switch error {
         case is URLError:
           return Error.addressUnreachable(EndPoint.stories.url)

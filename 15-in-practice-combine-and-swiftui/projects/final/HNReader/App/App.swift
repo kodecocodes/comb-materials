@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -26,33 +26,30 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
-import UIKit
 import SwiftUI
 import Combine
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-  
-  var window: UIWindow?
+@main
+struct HNReader: App {
   private var subscriptions = Set<AnyCancellable>()
   
-  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-    let userSettings = Settings()
-    let viewModel = ReaderViewModel()
+  let userSettings = Settings()
+  let viewModel = ReaderViewModel()
 
+  init() {
     userSettings.$keywords
       .map { $0.map { $0.value } }
       .assign(to: \.filter, on: viewModel)
       .store(in: &subscriptions)
-
-    let rootView = ReaderView(model: viewModel)
-      .environmentObject(userSettings)
-    
-    if let windowScene = scene as? UIWindowScene {
-      let window = UIWindow(windowScene: windowScene)
-      window.rootViewController = UIHostingController(rootView: rootView)
-      self.window = window
-      window.makeKeyAndVisible()
-      viewModel.fetchStories()
+  }
+  
+  var body: some Scene {
+    WindowGroup {
+      ReaderView(model: viewModel)
+        .environmentObject(userSettings)
+        .onAppear {
+          viewModel.fetchStories()
+        }
     }
   }
 }

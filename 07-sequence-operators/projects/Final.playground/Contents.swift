@@ -22,7 +22,7 @@ example(of: "min non-Comparable") {
   let publisher = ["12345",
                    "ab",
                    "hello world"]
-    .compactMap { $0.data(using: .utf8) } // [Data]
+    .map { Data($0.utf8) } // [Data]
     .publisher // Publisher<Data, Never>
 
   // 2
@@ -149,7 +149,6 @@ example(of: "contains(where:)") {
 
   // 2
   let people = [
-    (456, "Scott Gardner"),
     (123, "Shai Mishali"),
     (777, "Marin Todorov"),
     (214, "Florent Pillet")
@@ -194,7 +193,7 @@ example(of: "reduce") {
     .store(in: &subscriptions)
 }
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

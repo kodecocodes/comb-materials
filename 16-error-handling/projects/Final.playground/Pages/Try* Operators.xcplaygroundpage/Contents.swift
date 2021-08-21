@@ -12,8 +12,8 @@ example(of: "tryMap") {
   }
 
   // 2
-  let names = ["Scott", "Marin", "Shai", "Florent"].publisher
-  
+  let names = ["Marin", "Shai", "Florent"].publisher
+
   names
     // 3
     .tryMap { value -> Int in
@@ -28,12 +28,14 @@ example(of: "tryMap") {
       // 3
       return value.count
     }
-    .sink(receiveCompletion: { print("Completed with \($0)") },
-          receiveValue: { print("Got value: \($0)") })
+    .sink(
+      receiveCompletion: { print("Completed with \($0)") },
+      receiveValue: { print("Got value: \($0)") }
+    )
 }
 //: [Next](@next)
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

@@ -37,8 +37,10 @@ example(of: "Joke API") {
     // 2
     func getJoke(id: String) -> AnyPublisher<Joke, Error> {
       guard id.rangeOfCharacter(from: .letters) != nil else {
-        return Fail<Joke, Error>(error: .jokeDoesntExist(id: id))
-                .eraseToAnyPublisher()
+        return Fail<Joke, Error>(
+          error: .jokeDoesntExist(id: id)
+        )
+        .eraseToAnyPublisher()
       }
 
       let url = URL(string: "https://icanhazdadjoke.com/j/\(id)")!
@@ -88,7 +90,7 @@ example(of: "Joke API") {
 }
 //: [Next](@next)
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

@@ -33,7 +33,7 @@ example(of: "setFailureType") {
     .store(in: &subscriptions)
 }
 
-example(of: "assign") {
+example(of: "assign(to:on:)") {
   // 1
   class Person {
     let id = UUID()
@@ -52,6 +52,25 @@ example(of: "assign") {
     .store(in: &subscriptions)
 }
 
+//example(of: "assign(to:)") {
+//  class MyViewModel: ObservableObject {
+//    @Published var currentDate = Date()
+//
+//    init() {
+//      Timer.publish(every: 1, on: .main, in: .common)
+//        .autoconnect() // 1
+//        .prefix(3) // 2
+//        .assign(to: &$currentDate)
+//    }
+//  }
+//
+//  // 4
+//  let vm = MyViewModel()
+//  vm.$currentDate
+//    .sink(receiveValue: { print($0) })
+//    .store(in: &subscriptions)
+//}
+
 example(of: "assertNoFailure") {
   // 1
   Just("Hello")
@@ -63,7 +82,7 @@ example(of: "assertNoFailure") {
 }
 //: [Next](@next)
 
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal

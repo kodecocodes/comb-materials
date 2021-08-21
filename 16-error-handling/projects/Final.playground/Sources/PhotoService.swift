@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -34,8 +34,10 @@ public class PhotoService {
   public init() { }
   private var retries = 0
 
-  public func fetchPhoto(quality: Quality,
-                         failingTimes: Int = .max) -> PhotoService.Publisher {
+  public func fetchPhoto(
+    quality: Quality,
+    failingTimes: Int = .max
+  ) -> PhotoService.Publisher {
     Publisher(quality: quality, failingTimes: failingTimes)
   }
 }
@@ -55,8 +57,10 @@ public extension PhotoService {
         self.failingTimes = failingTimes
       }
 
-      public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure,
-                                                              Output == S.Input {
+      public func receive<S: Subscriber>(
+        subscriber: S
+      ) where Failure == S.Failure,
+              Output == S.Input {
         retries += 1
 
         let subscription = Subscription(quality: quality,
@@ -69,8 +73,9 @@ public extension PhotoService {
 }
 
 private extension PhotoService.Publisher {
-  class Subscription<S: Subscriber>: Combine.Subscription where S.Input == UIImage,
-                                                                S.Failure == PhotoService.Publisher.Failure {
+  class Subscription<S: Subscriber>: Combine.Subscription
+  where S.Input == UIImage,
+        S.Failure == PhotoService.Publisher.Failure {
     private let quality: PhotoService.Quality
     private let shouldFail: Bool
     private let subscriber: S

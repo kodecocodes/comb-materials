@@ -46,7 +46,7 @@ class PhotoWriter {
           let request = PHAssetChangeRequest.creationRequestForAsset(from: image)
           
           // 2
-          guard let savedAssetID = 
+          guard let savedAssetID =
             request.placeholderForCreatedAsset?.localIdentifier else {
             // 3
             return resolve(.failure(.couldNotSavePhoto))

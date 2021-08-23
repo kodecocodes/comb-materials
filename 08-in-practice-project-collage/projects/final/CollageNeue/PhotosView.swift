@@ -84,6 +84,7 @@ struct PhotosView: View {
           }
         }
       }
+      
       model.bindPhotoPicker()
     }
     .onDisappear {

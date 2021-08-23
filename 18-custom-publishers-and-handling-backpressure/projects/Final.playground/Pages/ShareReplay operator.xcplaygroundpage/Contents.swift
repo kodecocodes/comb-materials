@@ -169,7 +169,7 @@ extension Publishers {
       }
       // 31
       subscriptions.forEach {
-        _ = $0.receive(value)
+		  $0.receive(value)
       }
     }
 
@@ -180,7 +180,7 @@ extension Publishers {
       self.completion = completion
       // 33
       subscriptions.forEach {
-        _ = $0.receive(completion: completion)
+		  $0.receive(completion: completion)
       }
     }
   }
@@ -245,7 +245,7 @@ DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 
 //: [Next](@next)
 /*:
- Copyright (c) 2020 Razeware LLC
+ Copyright (c) 2021 Razeware LLC
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

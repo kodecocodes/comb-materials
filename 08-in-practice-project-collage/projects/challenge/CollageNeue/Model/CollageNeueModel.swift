@@ -31,19 +31,20 @@ import Photos
 import Combine
 
 class CollageNeueModel: ObservableObject {
-  // MARK: - Collage
   static let collageSize = CGSize(width: UIScreen.main.bounds.width, height: 200)
   
   private var subscriptions = Set<AnyCancellable>()
   private(set) var images = CurrentValueSubject<[UIImage], Never>([])
-
-  private(set) var lastSavedPhotoID = ""
-  private(set) var lastErrorMessage = ""
-
   @Published var imagePreview: UIImage?
   let updateUISubject = PassthroughSubject<Int, Never>()
   
+  // MARK: - Collage
+  
+  private(set) var lastSavedPhotoID = ""
+  private(set) var lastErrorMessage = ""
+
   func bindMainView() {
+    // 1
     images
       .handleEvents(receiveOutput: { [weak self] photos in
         self?.updateUISubject.send(photos.count)
@@ -61,9 +62,8 @@ class CollageNeueModel: ObservableObject {
   }
 
   func add() {
-    selectedPhotosSubject = PassthroughSubject<UIImage, Never>()
-    
     //images.value.append(UIImage(named: "IMG_1907")!)
+    selectedPhotosSubject = PassthroughSubject<UIImage, Never>()
     let newPhotos = selectedPhotos
       .prefix(while: { [unowned self] _ in
         return self.images.value.count < 6
@@ -79,14 +79,6 @@ class CollageNeueModel: ObservableObject {
       .assign(to: \.value, on: images)
       // 3
       .store(in: &subscriptions)
-    
-    selectedPhotos
-      .filter { _ in self.images.value.count == 5 }
-      .sink(receiveValue: { [unowned self] _ in
-        self.lastErrorMessage = "To add more than 6 photos please purchase Collage Pro"
-      })
-      .store(in: &subscriptions)
-
   }
 
   func clear() {
@@ -95,7 +87,7 @@ class CollageNeueModel: ObservableObject {
 
   func save() {
     guard let image = imagePreview else { return }
-    
+
     // 1
     PhotoWriter.save(image)
       .sink(receiveCompletion: { [unowned self] completion in
@@ -116,7 +108,9 @@ class CollageNeueModel: ObservableObject {
   private(set) var thumbnails = [String: UIImage]()
   private let thumbnailSize = CGSize(width: 200, height: 200)
 
-  private(set) var selectedPhotosSubject = PassthroughSubject<UIImage, Never>()
+  private(set) var selectedPhotosSubject =
+    PassthroughSubject<UIImage, Never>()
+
   var selectedPhotos: AnyPublisher<UIImage, Never> {
     return selectedPhotosSubject.eraseToAnyPublisher()
   }

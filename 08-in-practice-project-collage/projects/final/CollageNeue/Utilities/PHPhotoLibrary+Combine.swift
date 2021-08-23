@@ -31,7 +31,7 @@ import Photos
 import Combine
 
 extension PHPhotoLibrary {
-  
+
   static func fetchAuthorizationStatus(callback: @escaping (Bool) -> Void) {
     // Fetch the current status.
     let currentlyAuthorized = authorizationStatus() == .authorized

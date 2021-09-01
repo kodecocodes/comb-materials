@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -41,10 +41,10 @@ public final class JokesViewModel: ObservableObject {
   
   private static let decoder = JSONDecoder()
   
-  @Published public var fetching: Bool = false
-  @Published public var joke: Joke = Joke.starter
+  @Published public var fetching = false
+  @Published public var joke = Joke.starter
   @Published public var backgroundColor = Color("Gray")
-  @Published public var decisionState: DecisionState = .undecided
+  @Published public var decisionState = DecisionState.undecided
 
   private let jokesService: JokeServiceDataPublisher
 

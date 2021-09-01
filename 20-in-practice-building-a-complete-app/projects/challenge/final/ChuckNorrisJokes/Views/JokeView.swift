@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2021 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -143,15 +143,19 @@ struct JokeView: View {
       self.viewModel.reset()
     default:
       if decisionState == .liked {
-        JokeManagedObject.save(joke: viewModel.joke,
-                               inViewContext: viewContext)
+        JokeManagedObject.save(
+          joke: viewModel.joke,
+          inViewContext: viewContext
+        )
       }
 
       // 3
       let translation = change.translation
       let offset = (decisionState == .liked ? 2 : -2) * bounds.width
-      cardTranslation = CGSize(width: translation.width + offset,
-                               height: translation.height)
+      cardTranslation = CGSize(
+        width: translation.width + offset,
+        height: translation.height
+      )
       showJokeView = false
       
       // 4

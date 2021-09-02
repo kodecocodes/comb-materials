@@ -26,7 +26,7 @@ example(of: "map") {
     .store(in: &subscriptions)
 }
 
-example(of: "map key paths") {
+example(of: "mapping key paths") {
   // 1
   let publisher = PassthroughSubject<Coordinate, Never>()
   

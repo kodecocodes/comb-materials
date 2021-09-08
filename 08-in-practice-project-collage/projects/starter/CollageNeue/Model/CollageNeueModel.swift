@@ -78,7 +78,12 @@ class CollageNeueModel: ObservableObject {
   }
   
   func selectImage(asset: PHAsset) {
-    imageManager.requestImage(for: asset, targetSize: UIScreen.main.bounds.size, contentMode: .aspectFill, options: nil, resultHandler: { [weak self] image, info in
+    imageManager.requestImage(
+      for: asset,
+      targetSize: UIScreen.main.bounds.size,
+      contentMode: .aspectFill,
+      options: nil
+    ) { [weak self] image, info in
       guard let self = self,
             let image = image,
             let info = info else { return }

@@ -45,10 +45,6 @@ class CollageNeueModel: ObservableObject {
   private(set) var selectedPhotosSubject =
     PassthroughSubject<UIImage, Never>()
 
-  var selectedPhotos: AnyPublisher<UIImage, Never> {
-    selectedPhotosSubject.eraseToAnyPublisher()
-  }
-
   func bindMainView() {
     // 1
     images
@@ -64,7 +60,8 @@ class CollageNeueModel: ObservableObject {
 
   func add() {
     selectedPhotosSubject = PassthroughSubject<UIImage, Never>()
-    let newPhotos = selectedPhotos
+    let newPhotos = selectedPhotosSubject
+      .eraseToAnyPublisher()
       .prefix(while: { [unowned self] _ in
         self.images.value.count < 6
       })

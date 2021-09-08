@@ -26,22 +26,28 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
 
+import Combine
 import UIKit
 import Photos
-import Combine
 
 class CollageNeueModel: ObservableObject {
   static let collageSize = CGSize(width: UIScreen.main.bounds.width, height: 200)
-  
-  private var subscriptions = Set<AnyCancellable>()
-  private(set) var images = CurrentValueSubject<[UIImage], Never>([])
-  @Published var imagePreview: UIImage?
-  let updateUISubject = PassthroughSubject<Int, Never>()
   
   // MARK: - Collage
   
   private(set) var lastSavedPhotoID = ""
   private(set) var lastErrorMessage = ""
+  private var subscriptions = Set<AnyCancellable>()
+  private let images = CurrentValueSubject<[UIImage], Never>([])
+  @Published var imagePreview: UIImage?
+  let updateUISubject = PassthroughSubject<Int, Never>()
+
+  private(set) var selectedPhotosSubject =
+    PassthroughSubject<UIImage, Never>()
+
+  var selectedPhotos: AnyPublisher<UIImage, Never> {
+    selectedPhotosSubject.eraseToAnyPublisher()
+  }
 
   func bindMainView() {
     // 1
@@ -53,20 +59,14 @@ class CollageNeueModel: ObservableObject {
       .map { photos in
         UIImage.collage(images: photos, size: Self.collageSize)
       }
-      // 3
-      .sink { [weak self] in
-        self?.imagePreview = $0
-      }
-      // 4
-      .store(in: &subscriptions)
+      .assign(to: &$imagePreview)
   }
 
   func add() {
-    //images.value.append(UIImage(named: "IMG_1907")!)
     selectedPhotosSubject = PassthroughSubject<UIImage, Never>()
     let newPhotos = selectedPhotos
       .prefix(while: { [unowned self] _ in
-        return self.images.value.count < 6
+        self.images.value.count < 6
       })
       .share()
 
@@ -90,16 +90,19 @@ class CollageNeueModel: ObservableObject {
 
     // 1
     PhotoWriter.save(image)
-      .sink(receiveCompletion: { [unowned self] completion in
-        // 2
-        if case .failure(let error) = completion {
-          lastErrorMessage = error.localizedDescription
+      .sink(
+        receiveCompletion: { [unowned self] completion in
+          // 2
+          if case .failure(let error) = completion {
+            lastErrorMessage = error.localizedDescription
+          }
+          clear()
+        },
+        receiveValue: { [unowned self] id in
+          // 3
+          lastSavedPhotoID = id
         }
-        clear()
-      }, receiveValue: { [unowned self] id in
-        // 3
-        lastSavedPhotoID = id
-      })
+      )
       .store(in: &subscriptions)
   }
   
@@ -108,13 +111,6 @@ class CollageNeueModel: ObservableObject {
   private(set) var thumbnails = [String: UIImage]()
   private let thumbnailSize = CGSize(width: 200, height: 200)
 
-  private(set) var selectedPhotosSubject =
-    PassthroughSubject<UIImage, Never>()
-
-  var selectedPhotos: AnyPublisher<UIImage, Never> {
-    return selectedPhotosSubject.eraseToAnyPublisher()
-  }
-  
   func bindPhotoPicker() {
     
   }
@@ -135,7 +131,12 @@ class CollageNeueModel: ObservableObject {
   }
   
   func selectImage(asset: PHAsset) {
-    imageManager.requestImage(for: asset, targetSize: UIScreen.main.bounds.size, contentMode: .aspectFill, options: nil, resultHandler: { [weak self] image, info in
+    imageManager.requestImage(
+      for: asset,
+      targetSize: UIScreen.main.bounds.size,
+      contentMode: .aspectFill,
+      options: nil
+    ) { [weak self] image, info in
       guard let self = self,
             let image = image,
             let info = info else { return }
@@ -145,8 +146,7 @@ class CollageNeueModel: ObservableObject {
         return
       }
       
-      // Send the selected image
       self.selectedPhotosSubject.send(image)
-    })
+    }
   }
 }

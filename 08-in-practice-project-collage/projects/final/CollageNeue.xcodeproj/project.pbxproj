@@ -56,7 +56,9 @@
 				9CCA481526D27032000CF7FE /* CollageNeue */,
 				9CCA481426D27032000CF7FE /* Products */,
 			);
+			indentWidth = 2;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		9CCA481426D27032000CF7FE /* Products */ = {
 			isa = PBXGroup;

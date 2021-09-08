@@ -87,7 +87,7 @@ struct PhotosView: View {
           }
         }
         .store(in: &subscriptions)
-
+      
       model.bindPhotoPicker()
     }
     .onDisappear {

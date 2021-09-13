@@ -320,6 +320,26 @@ example(of: "Type erasure") {
   //publisher.send(1)
 }
 
+example(of: "async/await") {
+  // 1
+  let subject = CurrentValueSubject<Int, Never>(0)
+
+  // 2
+  Task {
+    for await element in subject.values {
+      print("Element: \(element)")
+    }
+    print("Completed.")
+  }
+
+  // 3
+  subject.send(1)
+  subject.send(2)
+  subject.send(3)
+
+  subject.send(completion: .finished)
+}
+
 /// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy

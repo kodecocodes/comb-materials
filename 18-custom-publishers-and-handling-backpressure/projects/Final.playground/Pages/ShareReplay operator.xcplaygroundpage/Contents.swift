@@ -169,7 +169,7 @@ extension Publishers {
       }
       // 31
       subscriptions.forEach {
-		  $0.receive(value)
+        $0.receive(value)
       }
     }
 
@@ -180,7 +180,7 @@ extension Publishers {
       self.completion = completion
       // 33
       subscriptions.forEach {
-		  $0.receive(completion: completion)
+	$0.receive(completion: completion)
       }
     }
   }

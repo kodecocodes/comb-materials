@@ -94,6 +94,6 @@ class CollageNeueModel: ObservableObject {
       }
       
       // Send the selected image
-    })
+    }
   }
 }

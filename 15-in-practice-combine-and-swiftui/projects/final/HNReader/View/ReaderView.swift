@@ -30,7 +30,6 @@ import SwiftUI
 
 struct ReaderView: View {
   @Environment(\.colorScheme) var colorScheme: ColorScheme
-  @EnvironmentObject var settings: Settings
 
   @ObservedObject var model: ReaderViewModel
   @State var presentingSettingsSheet = false
@@ -77,7 +76,6 @@ struct ReaderView: View {
       .listStyle(PlainListStyle())
       .sheet(isPresented: self.$presentingSettingsSheet, content: {
         SettingsView()
-          .environmentObject(self.settings)
       })
       .alert(item: self.$model.error) { error in
         Alert(

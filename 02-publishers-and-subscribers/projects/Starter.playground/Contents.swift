@@ -1,11 +1,3 @@
-import Foundation
-import Combine
-import _Concurrency
-
-var subscriptions = Set<AnyCancellable>()
-
-print("deneme")
-
 /// Copyright (c) 2021 Razeware LLC
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -33,3 +25,98 @@ print("deneme")
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 /// THE SOFTWARE.
+
+import Foundation
+import Combine
+import _Concurrency
+
+var subscriptions = Set<AnyCancellable>()
+
+example(of: "Publisher") {
+    
+    let myNotif = Notification.Name("MyNotif")
+    
+    let publisher = NotificationCenter.default.publisher(for: myNotif, object: nil)
+    
+    let center = NotificationCenter.default
+    
+    let observer = center.addObserver(forName: myNotif, object: nil, queue: nil) { notif in
+        print("Notification received!")
+    }
+    
+    center.post(name: myNotif, object: nil)
+    
+    center.removeObserver(observer)
+}
+
+example(of: "Subscriber") {
+    
+    let myNotif = Notification.Name("MyNotif")
+    let center = NotificationCenter.default
+    
+    let publisher = center.publisher(for: myNotif, object: nil)
+    
+    let subscription = publisher
+        .sink { _ in
+            print("Notif received from a publisher!")
+        }
+    
+    center.post(name: myNotif, object: nil)
+    
+    subscription.cancel()
+}
+
+example(of: "Just") {
+    
+    // Just creates a publisher from a single value.
+    let just = Just("Hello world!")
+    
+    _ = just.sink(receiveCompletion: {
+        print("Received completion", $0)
+    }, receiveValue: {
+        print("Received value", $0)
+    })
+    
+    
+    _ = just.sink(receiveCompletion: {
+        print("Received completion (another)", $0)
+    }, receiveValue: {
+        print("Received value (another)", $0)
+    })
+}
+
+example(of: "assign(to:on:)") {
+    
+    class SomeObject {
+        var value: String = "" {
+            didSet {
+                print(value)
+            }
+        }
+    }
+    
+    let object = SomeObject()
+    
+    let publisher = ["Hello", "world!"].publisher
+    
+    _ = publisher
+        .assign(to: \.value, on: object)
+}
+
+example(of: "assign(to:)") {
+    
+    class SomeObject {
+        @Published var value = 0
+    }
+    
+    let object = SomeObject()
+    
+    object.$value
+        .sink {
+            print($0)
+        }
+    
+    (0..<10).publisher
+        .assign(to: &object.$value)
+    
+}

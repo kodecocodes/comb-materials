@@ -4,7 +4,7 @@ import _Concurrency
 
 var subscriptions = Set<AnyCancellable>()
 
-<#Add your code here#>
+print("deneme")
 
 /// Copyright (c) 2021 Razeware LLC
 ///

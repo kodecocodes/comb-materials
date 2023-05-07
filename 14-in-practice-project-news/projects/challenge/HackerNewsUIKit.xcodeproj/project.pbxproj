@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -109,7 +109,7 @@
 				};
 			};
 			buildConfigurationList = 9CCD55B922EEDE15006D399F /* Build configuration list for PBXProject "HackerNewsUIKit" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (

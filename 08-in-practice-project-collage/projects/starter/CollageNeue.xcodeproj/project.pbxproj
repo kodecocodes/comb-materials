@@ -29,6 +29,7 @@
 		9CCA483226D27904000CF7FE /* PHPhotoLibrary+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PHPhotoLibrary+Combine.swift"; sourceTree = "<group>"; };
 		9CCA483326D27904000CF7FE /* PhotoWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoWriter.swift; sourceTree = "<group>"; };
 		9CCA483426D27904000CF7FE /* UIViewController+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Combine.swift"; sourceTree = "<group>"; };
+		9CD671212A082E2600901556 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +72,7 @@
 		9CCA481526D27032000CF7FE /* CollageNeue */ = {
 			isa = PBXGroup;
 			children = (
+				9CD671212A082E2600901556 /* Info.plist */,
 				9C50A23A26D3959300529863 /* Model */,
 				9CCA482826D278BE000CF7FE /* Utilities */,
 				9CCA481626D27033000CF7FE /* CollageNeueApp.swift */,
@@ -301,8 +303,8 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CollageNeue/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your device's photo library to allow you to select photos for your collage";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -334,8 +336,8 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CollageNeue/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your device's photo library to allow you to select photos for your collage";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

@@ -41,7 +41,7 @@ collectedPublisher.displayEvents(in: collectedTimeline)
 collectedPublisher2.displayEvents(in: collectedTimeline2)
 //: [Next](@next)
 /*:
- Copyright (c) 2021 Razeware LLC
+ Copyright (c) 2023 Kodeco Inc.
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

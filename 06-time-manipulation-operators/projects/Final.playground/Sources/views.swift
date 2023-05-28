@@ -55,7 +55,7 @@ struct SimultaneousEventsView: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: 0) {
-      ForEach(0 ..< self.events.count) {
+        ForEach(0 ..< self.events.count, id: \.self) {
         EventView(event: self.events[$0])
       }
     }
@@ -153,7 +153,7 @@ public extension Publisher {
 
 
 /*:
- Copyright (c) 2021 Razeware LLC
+ Copyright (c) 2023 Kodeco Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal

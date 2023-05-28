@@ -55,7 +55,7 @@ struct SimultaneousEventsView: View {
 
   var body: some View {
     VStack(alignment: .center, spacing: 0) {
-      ForEach(0 ..< self.events.count) {
+        ForEach(0 ..< self.events.count, id: \.self) {
         EventView(event: self.events[$0])
       }
     }

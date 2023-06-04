@@ -6,7 +6,7 @@ import PlaygroundSupport
 
 //: [Next](@next)
 /*:
- Copyright (c) 2021 Razeware LLC
+ Copyright (c) 2023 Kodeco Inc.
 
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -26,6 +26,10 @@ import PlaygroundSupport
  merger, publication, distribution, sublicensing, creation of derivative works,
  or sale is expressly withheld.
 
+ This project and source code may use libraries or frameworks that are
+ released under various Open-Source licenses. Use of those libraries and
+ frameworks are governed by their own individual licenses.
+ 
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE

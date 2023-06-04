@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ struct ButtonRows: View {
   @ObservedObject var viewModel: CalculatorViewModel
   
   var body: some View {
-    ForEach(range) { row in
+    ForEach(range, id: \.self) { row in
       Spacer()
       ButtonRow(viewModel: self.viewModel, row: row)
       Spacer()

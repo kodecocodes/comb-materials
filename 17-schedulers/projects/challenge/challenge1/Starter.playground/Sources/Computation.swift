@@ -1,4 +1,4 @@
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,6 +18,10 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 ///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
+///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +34,6 @@ import Foundation
 import Combine
 
 final class ComputationSubscription<Output>: Subscription {
-
   private let duration: TimeInterval
   private let sendCompletion: () -> Void
   private let sendValue: (Output) -> Subscribers.Demand
@@ -46,17 +49,20 @@ final class ComputationSubscription<Output>: Subscription {
 
   func request(_ demand: Subscribers.Demand) {
     if !cancelled {
-      print("Beginning expensive computation from thread \(Thread.current.number)")
+      print("Beginning expensive computation on thread \(Thread.current.number)")
     }
     Thread.sleep(until: Date(timeIntervalSinceNow: duration))
     if !cancelled {
       print("Completed expensive computation on thread \(Thread.current.number)")
       _ = self.sendValue(self.finalValue)
       self.sendCompletion()
+    } else {
+      print("Expensive computation completed but was cancelled")
     }
   }
 
   func cancel() {
+    print("Cancelling expensive computation")
     cancelled = true
   }
 }

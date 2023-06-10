@@ -104,8 +104,10 @@ example(of: "output(in:)") {
   // 2
   publisher
     .output(in: 1...3)
-    .sink(receiveCompletion: { print($0) },
-          receiveValue: { print("Value in range: \($0)") })
+    .sink(
+      receiveCompletion: { print($0) },
+      receiveValue: { print("Value in range: \($0)") }
+    )
     .store(in: &subscriptions)
 }
 
@@ -193,7 +195,7 @@ example(of: "reduce") {
     .store(in: &subscriptions)
 }
 
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -212,6 +214,10 @@ example(of: "reduce") {
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,

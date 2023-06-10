@@ -19,8 +19,8 @@ example(of: "filter") {
 example(of: "removeDuplicates") {
   // 1
   let words = "hey hey there! want to listen to mister mister ?"
-                  .components(separatedBy: " ")
-                  .publisher
+    .components(separatedBy: " ")
+    .publisher
   // 2
   words
     .removeDuplicates()
@@ -52,8 +52,10 @@ example(of: "ignoreOutput") {
   // 2
   numbers
     .ignoreOutput()
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 }
 
@@ -67,8 +69,10 @@ example(of: "first(where:)") {
   numbers
     .print("numbers")
     .first(where: { $0 % 2 == 0 })
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 }
 
@@ -77,8 +81,10 @@ example(of: "last(where:)") {
   
   numbers
     .last(where: { $0 % 2 == 0 })
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
   
   numbers.send(1)
@@ -146,8 +152,10 @@ example(of: "prefix") {
   // 2
   numbers
     .prefix(2)
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 }
 
@@ -158,8 +166,10 @@ example(of: "prefix(while:)") {
   // 2
   numbers
     .prefix(while: { $0 < 3 })
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
 }
 
@@ -171,8 +181,10 @@ example(of: "prefix(untilOutputFrom:)") {
   // 2
   taps
     .prefix(untilOutputFrom: isReady)
-    .sink(receiveCompletion: { print("Completed with: \($0)") },
-          receiveValue: { print($0) })
+    .sink(
+      receiveCompletion: { print("Completed with: \($0)") },
+      receiveValue: { print($0) }
+    )
     .store(in: &subscriptions)
   
   // 3
@@ -185,7 +197,7 @@ example(of: "prefix(untilOutputFrom:)") {
   }
 }
 
-/// Copyright (c) 2021 Razeware LLC
+/// Copyright (c) 2023 Kodeco Inc.
 ///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -204,6 +216,10 @@ example(of: "prefix(untilOutputFrom:)") {
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
+///
+/// This project and source code may use libraries or frameworks that are
+/// released under various Open-Source licenses. Use of those libraries and
+/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
